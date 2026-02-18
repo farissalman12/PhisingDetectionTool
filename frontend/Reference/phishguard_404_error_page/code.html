@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PhishGuard - 404 Not Found</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5048e5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121121",
+                        "neutral-light": "#e0e0e6", 
+                        "neutral-dark": "#2d2c3b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col text-[#0f0e1b] dark:text-[#f9f8fb] antialiased">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e8e8f3] dark:border-[#2d2c3b] px-6 lg:px-10 py-4 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined !text-[32px]">shield</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h2 class="text-[#0f0e1b] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">PhishGuard</h2>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">by Faris Salman</span>
+</div>
+</div>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-8">
+<a class="text-[#0f0e1b] dark:text-[#e0e0e6] text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#0f0e1b] dark:text-[#e0e0e6] text-sm font-medium hover:text-primary transition-colors" href="#">Analyze URL</a>
+<a class="text-[#0f0e1b] dark:text-[#e0e0e6] text-sm font-medium hover:text-primary transition-colors" href="#">Scan Email</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 hover:bg-primary/20 text-primary dark:text-[#a5a1f5] text-sm font-bold transition-colors">
+                    Sign In
+                </button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white hover:bg-primary/90 text-sm font-bold transition-colors shadow-sm">
+                    Get Started
+                </button>
+</div>
+</div>
+<button class="md:hidden text-[#0f0e1b] dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="flex-grow flex items-center justify-center px-4 py-12 lg:py-20">
+<div class="flex flex-col items-center gap-8 max-w-2xl text-center">
+<div class="relative w-full max-w-[320px] aspect-square flex items-center justify-center mb-4">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl transform scale-75"></div>
+<div class="relative z-10 text-primary opacity-90">
+<span class="material-symbols-outlined text-[180px] sm:text-[220px] font-light text-primary/20 dark:text-primary/40">link_off</span>
+<span class="material-symbols-outlined text-[100px] sm:text-[120px] absolute bottom-0 right-4 sm:right-0 bg-background-light dark:bg-background-dark rounded-full p-2 text-primary shadow-lg border-4 border-background-light dark:border-background-dark">search_off</span>
+</div>
+</div>
+<div class="space-y-4">
+<h1 class="text-[#0f0e1b] dark:text-white text-4xl sm:text-5xl font-extrabold tracking-tight">
+                    Oops! This link is lost.
+                </h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg sm:text-xl leading-relaxed max-w-md mx-auto">
+                    The page you are looking for doesn't exist or has been moved. Let's get you back to safety.
+                </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full justify-center mt-4">
+<a class="flex items-center justify-center gap-2 rounded-lg h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5" href="#">
+<span class="material-symbols-outlined text-[20px]">home</span>
+                    Back to Dashboard
+                </a>
+<a class="flex items-center justify-center gap-2 rounded-lg h-12 px-8 bg-white dark:bg-[#2d2c3b] border border-[#e8e8f3] dark:border-[#403e54] text-[#0f0e1b] dark:text-white text-base font-bold hover:bg-slate-50 dark:hover:bg-[#363547] transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+                    Contact Support
+                </a>
+</div>
+<div class="flex gap-6 mt-8 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary dark:hover:text-[#a5a1f5] transition-colors underline decoration-slate-300 underline-offset-4" href="#">Report a Bug</a>
+<span class="text-slate-300 dark:text-slate-600">•</span>
+<a class="hover:text-primary dark:hover:text-[#a5a1f5] transition-colors underline decoration-slate-300 underline-offset-4" href="#">System Status</a>
+</div>
+</div>
+</main>
+<footer class="border-t border-[#e8e8f3] dark:border-[#2d2c3b] bg-white dark:bg-background-dark">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 px-6 py-8">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">© 2024 PhishGuard. All rights reserved.</p>
+<div class="flex flex-wrap items-center justify-center gap-8">
+<a class="text-slate-500 dark:text-slate-400 text-sm hover:text-primary dark:hover:text-[#a5a1f5] transition-colors" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm hover:text-primary dark:hover:text-[#a5a1f5] transition-colors" href="#">Terms of Service</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm hover:text-primary dark:hover:text-[#a5a1f5] transition-colors" href="#">Support</a>
+</div>
+</div>
+</footer>
+
+</body></html>

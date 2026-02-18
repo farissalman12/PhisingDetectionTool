@@ -15,7 +15,9 @@ describe('KeywordRule', () => {
   });
 
   it('should accumulate score for multiple keywords', async () => {
-    const result = await rule.scan({ url: 'http://example.com/verify-account-login' });
+    const result = await rule.scan({
+      url: 'http://example.com/verify-account-login',
+    });
     expect(result).not.toBeNull();
     expect(result?.score).toBe(45); // verify, account, login = 15 * 3
     expect(result?.details).toContain('verify');
@@ -24,7 +26,9 @@ describe('KeywordRule', () => {
   });
 
   it('should cap score at 60', async () => {
-    const result = await rule.scan({ url: 'http://example.com/login-verify-account-secure-update-confirm' });
+    const result = await rule.scan({
+      url: 'http://example.com/login-verify-account-secure-update-confirm',
+    });
     expect(result).not.toBeNull();
     expect(result?.score).toBe(60);
   });
@@ -35,7 +39,9 @@ describe('KeywordRule', () => {
   });
 
   it('should detect keywords in query parameters', async () => {
-    const result = await rule.scan({ url: 'http://example.com?action=verify&type=banking' });
+    const result = await rule.scan({
+      url: 'http://example.com?action=verify&type=banking',
+    });
     expect(result).not.toBeNull();
     expect(result?.details).toContain('verify');
     expect(result?.details).toContain('banking');

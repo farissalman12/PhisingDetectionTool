@@ -10,12 +10,12 @@ export class PunycodeRule implements IRule {
       const hostname = parsedUrl.hostname;
 
       const decoded = domainToUnicode(hostname);
-      
+
       if (hostname !== decoded) {
         return {
           ruleName: 'Punycode/Homograph Detection',
-          score: 80,
-          details: `The domain uses Punycode (${hostname} -> ${decoded}), which is often used to spoof legitimate brands.`
+          score: 30,
+          details: `The domain uses Punycode (${hostname} -> ${decoded}), which is often used to spoof legitimate brands.`,
         };
       }
 

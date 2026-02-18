@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PhishGuard - Scan Result: High Risk Found</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5247e6",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121121",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#0f0e1b] font-display min-h-screen flex flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e9e8f3] dark:border-b-[#2a2838] bg-white dark:bg-[#1a1929] px-6 lg:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-[#0f0e1b] dark:text-white">
+<div class="flex items-center gap-2">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<div class="flex items-baseline gap-2">
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">PhishGuard</h2>
+<span class="text-xs font-medium text-slate-500">by Faris Salman</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">History</a>
+<a class="hover:text-primary transition-colors" href="#">Settings</a>
+<a class="hover:text-primary transition-colors" href="#">Help</a>
+</nav>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden md:block"></div>
+<button class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="size-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 font-bold text-xs">
+                JD
+            </div>
+<span class="text-sm font-medium hidden md:block">My Account</span>
+</button>
+</div>
+</header>
+<main class="flex-1 w-full max-w-[1000px] mx-auto p-4 md:p-6 lg:p-8 flex flex-col gap-6">
+<div class="bg-white dark:bg-[#1a1929] rounded-xl border border-rose-200 dark:border-rose-900/50 shadow-sm overflow-hidden">
+<div class="bg-rose-50 dark:bg-rose-950/20 px-6 py-4 border-b border-rose-100 dark:border-rose-900/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-rose-100 dark:bg-rose-900/40 rounded-lg text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined text-2xl">gpp_bad</span>
+</div>
+<div>
+<h1 class="text-lg font-bold text-rose-700 dark:text-rose-400 leading-tight">Phishing Detected</h1>
+<p class="text-sm text-rose-600/80 dark:text-rose-400/80 font-medium">Critical Threat Level</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-mono bg-white dark:bg-black/20 px-2 py-1 rounded text-xs text-rose-800 dark:text-rose-200 border border-rose-200 dark:border-rose-900/30">
+                    http://paypaI-secure-login.ru
+                </span>
+<button class="bg-rose-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm hover:bg-rose-700 transition-colors">
+                    Block URL
+                </button>
+</div>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-8">
+<div class="md:col-span-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-6">
+<div class="relative w-40 h-20 mb-2">
+<div class="absolute inset-0 w-full h-full rounded-t-full bg-slate-100 dark:bg-slate-800"></div>
+<div class="absolute inset-0 w-full h-full rounded-t-full bg-rose-600 origin-bottom" style="transform: rotate(0deg); clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);"></div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-16 bg-white dark:bg-[#1a1929] rounded-t-full flex items-end justify-center pb-1">
+<span class="text-3xl font-bold text-rose-600">85</span>
+</div>
+</div>
+<div class="text-center">
+<p class="text-sm font-bold text-slate-700 dark:text-slate-200">Risk Score</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">High Confidence</p>
+</div>
+</div>
+<div class="md:col-span-8 flex flex-col gap-4">
+<div>
+<h3 class="text-base font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">psychology_alt</span>
+                        Analysis Summary
+                    </h3>
+<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        This URL pretends to be <span class="font-semibold text-slate-900 dark:text-slate-100">PayPal</span> but resolves to a server in <span class="font-semibold text-rose-600">Russia</span>. It employs a homograph attack by substituting the letter 'l' with an uppercase 'I' to deceive users into entering credentials.
+                    </p>
+</div>
+<div class="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">AI Insight</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed italic">
+                        "The site content displays urgent language typical of social engineering campaigns. The visual layout mimics the PayPal login screen with 98% similarity, but the underlying form action points to an unverified IP address."
+                    </p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="border-b border-[#e9e8f3] dark:border-[#2a2838]">
+<nav aria-label="Tabs" class="flex gap-6 overflow-x-auto">
+<button class="border-b-2 border-rose-600 pb-3 text-sm font-bold text-rose-600 whitespace-nowrap">
+                    Heuristics &amp; Checks
+                </button>
+<button class="border-b-2 border-transparent pb-3 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 whitespace-nowrap">
+                    Reputation Sources
+                </button>
+<button class="border-b-2 border-transparent pb-3 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 whitespace-nowrap">
+                    DNS &amp; Network
+                </button>
+<button class="border-b-2 border-transparent pb-3 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 whitespace-nowrap">
+                    Raw Data
+                </button>
+</nav>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-[#1a1929] rounded-xl border border-[#e9e8f3] dark:border-[#2a2838] overflow-hidden shadow-sm">
+<div class="px-5 py-3 border-b border-[#e9e8f3] dark:border-[#2a2838] bg-gray-50/50 dark:bg-[#201e30] flex items-center justify-between">
+<h4 class="font-bold text-[#0f0e1b] dark:text-white flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-gray-400 text-lg">code</span>
+                        Technical Heuristics
+                    </h4>
+<span class="text-xs font-medium text-rose-600 bg-rose-50 dark:bg-rose-900/20 px-2 py-1 rounded">2 Issues Found</span>
+</div>
+<div class="divide-y divide-[#e9e8f3] dark:divide-[#2a2838]">
+<div class="px-5 py-3 flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex flex-col">
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">Homograph Attack</p>
+<p class="text-xs text-gray-500">Visual character spoofing detected</p>
+</div>
+<div class="flex items-center gap-1.5 text-rose-600 font-bold text-xs bg-rose-50 dark:bg-rose-900/10 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+                            Failed
+                        </div>
+</div>
+<div class="px-5 py-3 flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex flex-col">
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">Suspicious TLD</p>
+<p class="text-xs text-gray-500">High-risk Top Level Domain (.ru)</p>
+</div>
+<div class="flex items-center gap-1.5 text-rose-600 font-bold text-xs bg-rose-50 dark:bg-rose-900/10 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+                            Failed
+                        </div>
+</div>
+<div class="px-5 py-3 flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex flex-col">
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">SSL Certificate</p>
+<p class="text-xs text-gray-500">Valid DV Certificate present</p>
+</div>
+<div class="flex items-center gap-1.5 text-emerald-600 font-bold text-xs bg-emerald-50 dark:bg-emerald-900/10 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                            Pass
+                        </div>
+</div>
+<div class="px-5 py-3 flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex flex-col">
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">Domain Age</p>
+<p class="text-xs text-gray-500">Registered &lt; 24 hours ago</p>
+</div>
+<div class="flex items-center gap-1.5 text-orange-600 font-bold text-xs bg-orange-50 dark:bg-orange-900/10 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                            Suspicious
+                        </div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1929] rounded-xl border border-[#e9e8f3] dark:border-[#2a2838] overflow-hidden shadow-sm">
+<div class="px-5 py-3 border-b border-[#e9e8f3] dark:border-[#2a2838] bg-gray-50/50 dark:bg-[#201e30] flex items-center justify-between">
+<h4 class="font-bold text-[#0f0e1b] dark:text-white flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-gray-400 text-lg">public</span>
+                        Reputation Status
+                    </h4>
+<span class="text-xs font-medium text-slate-500">3 Sources Checked</span>
+</div>
+<div class="divide-y divide-[#e9e8f3] dark:divide-[#2a2838]">
+<div class="px-5 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 font-bold text-[10px]">G</div>
+<div>
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">Google Safe Browsing</p>
+<p class="text-xs text-gray-500">Database check</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-rose-600 text-xs font-bold uppercase">
+<span class="material-symbols-outlined text-[18px]">gpp_bad</span>
+                            Malicious
+                        </div>
+</div>
+<div class="px-5 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 font-bold text-[10px]">VT</div>
+<div>
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">VirusTotal</p>
+<p class="text-xs text-gray-500">Aggregated Engines</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-orange-600 text-xs font-bold uppercase">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                            12/80 Flagged
+                        </div>
+</div>
+<div class="px-5 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 font-bold text-[10px]">Ph</div>
+<div>
+<p class="text-sm font-semibold text-[#0f0e1b] dark:text-white">PhishTank</p>
+<p class="text-xs text-gray-500">Community Database</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-emerald-600 text-xs font-bold uppercase">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                            Clean
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-12 bg-white dark:bg-[#1a1929] border-t border-[#e9e8f3] dark:border-[#2a2838] py-8">
+<div class="max-w-[1000px] mx-auto px-6 text-center text-sm text-gray-500 dark:text-gray-400">
+<p>© 2024 PhishGuard Security. All rights reserved.</p>
+<div class="mt-2 flex justify-center gap-4">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+</footer>
+
+</body></html>

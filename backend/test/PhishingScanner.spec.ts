@@ -31,7 +31,9 @@ describe('PhishingScanner', () => {
 
   it('should cap score at 100', async () => {
     // Multiple violations
-    const result = await scanner.scan('http://192.168.1.1/login-verify-account-secure-update-confirm.xyz');
+    const result = await scanner.scan(
+      'http://192.168.1.1/login-verify-account-secure-update-confirm.xyz',
+    );
     // 75 (IP) + 20 (TLD) + 60 (Keywords) = 155 -> 100
     expect(result.totalScore).toBe(100);
   });

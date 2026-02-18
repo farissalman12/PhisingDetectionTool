@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Verdict {
+  SAFE
+  SUSPICIOUS
+  PHISHING
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  role          Role     @default(USER)
+  created_at    DateTime @default(now())
+
+  scans             Scan[]
+  blacklist_entries BlacklistEntry[]
+
+  @@map("users")
+}
+
+model Scan {
+  id              String   @id @default(uuid())
+  user_id         String?
+  input_content   String
+  risk_score      Int
+  verdict         Verdict
+  detailed_report Json
+  created_at      DateTime @default(now())
+
+  user User? @relation(fields: [user_id], references: [id])
+
+  @@map("scans")
+}
+
+model BlacklistEntry {
+  id         String   @id @default(uuid())
+  pattern    String
+  added_by   String
+  reason     String
+  created_at DateTime @default(now())
+
+  admin User @relation(fields: [added_by], references: [id])
+
+  @@map("blacklist_entries")
+}

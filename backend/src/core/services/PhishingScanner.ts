@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { IRule } from '../interfaces/IRule';
 import { IScanRequest } from '../interfaces/IScanRequest';
 import { IScanResult, ScanVerdict } from '../interfaces/IScanResult';
@@ -5,43 +6,70 @@ import { IPAddressRule } from '../rules/IPAddressRule';
 import { SuspiciousTLDRule } from '../rules/SuspiciousTLDRule';
 import { KeywordRule } from '../rules/KeywordRule';
 import { PunycodeRule } from '../rules/PunycodeRule';
+import { ReputationService } from './ReputationService';
+import { AiAnalysisService } from './AiAnalysisService';
 
+@Injectable()
 export class PhishingScanner {
   private rules: IRule[];
 
-  constructor() {
+  constructor(
+    private reputationService: ReputationService,
+    private aiAnalysisService: AiAnalysisService,
+  ) {
     // Register default rules
     this.rules = [
       new IPAddressRule(),
       new SuspiciousTLDRule(),
       new KeywordRule(),
-      new PunycodeRule()
+      new PunycodeRule(),
     ];
   }
 
   public async scan(url: string, content?: string): Promise<IScanResult> {
     const request: IScanRequest = { url, content };
-    let totalScore = 0;
-    const ruleResults = [];
 
-    // Run all rules in parallel
-    const promises = this.rules.map(rule => rule.scan(request));
+    // 1. Heuristics (30% weight)
+    let heuristicScore = 0;
+    const ruleResults = [];
+    const promises = this.rules.map((rule) => rule.scan(request));
     const results = await Promise.all(promises);
 
     for (const result of results) {
       if (result) {
-        totalScore += result.score;
+        heuristicScore += result.score;
         ruleResults.push(result);
       }
     }
+    heuristicScore = Math.min(heuristicScore, 100);
 
-    // Cap score at 100
-    totalScore = Math.min(totalScore, 100);
+    // 2. Reputation (50% weight)
+    const reputationResult =
+      await this.reputationService.checkSafeBrowsing(url);
+    const reputationScore = reputationResult.score; // 0 or 100
+
+    // 3. AI (20% weight)
+    const aiResult = await this.aiAnalysisService.analyzeContent(url, content);
+    const aiScore = aiResult.score;
+
+    // 4. Weighted Formula
+    // Score = (0.5 * Rep) + (0.3 * Heu) + (0.2 * AI)
+    let totalScore =
+      0.5 * reputationScore + 0.3 * heuristicScore + 0.2 * aiScore;
+
+    // Critical Override: If Reputation is malicious (score 100), total is 100.
+    if (reputationScore === 100) {
+      totalScore = 100;
+    }
 
     return {
-      totalScore,
+      totalScore: Math.round(totalScore),
+      heuristicScore,
+      reputationScore,
+      aiScore,
+      aiExplanation: aiResult.explanation,
       rules: ruleResults,
-      verdict: this.getVerdict(totalScore)
+      verdict: this.getVerdict(totalScore),
     };
   }
 

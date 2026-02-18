@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  role          String   @default("USER")
+  created_at    DateTime @default(now())
+
+  scans             Scan[]
+  blacklist_entries BlacklistEntry[]
+
+  @@map("users")
+}
+
+model Scan {
+  id              String   @id @default(uuid())
+  user_id         String?
+  input_content   String
+  risk_score      Int
+  verdict         String
+  detailed_report String
+  created_at      DateTime @default(now())
+
+  user User? @relation(fields: [user_id], references: [id])
+
+  @@map("scans")
+}
+
+model BlacklistEntry {
+  id         String   @id @default(uuid())
+  pattern    String
+  added_by   String
+  reason     String
+  created_at DateTime @default(now())
+
+  admin User @relation(fields: [added_by], references: [id])
+
+  @@map("blacklist_entries")
+}

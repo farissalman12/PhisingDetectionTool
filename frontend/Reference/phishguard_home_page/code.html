@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PhishGuard - AI Phishing Detection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5247e6",
+                        "primary-dark": "#4035b0",
+                        "primary-light": "#eef2ff",
+                        "background-light": "#f8fafc","background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem",
+                        "md": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "glow": "0 0 20px -5px rgba(82, 71, 230, 0.15)",
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display min-h-screen flex flex-col">
+<header class="w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-2">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-size: 24px;">shield_lock</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">PhishGuard</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400 tracking-wide">by Faris Salman</span>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-white transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined" style="font-size: 18px;">play_circle</span>
+                        Video Demo
+                    </a>
+</div>
+<div class="flex items-center gap-3">
+<a class="hidden sm:flex items-center justify-center px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" href="#">
+                        Login
+                    </a>
+<a class="flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-glow" href="#">
+                        Get Started
+                    </a>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none overflow-hidden">
+<div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-primary/20 to-transparent blur-3xl"></div>
+<div class="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-tl from-purple-500/10 to-transparent blur-3xl"></div>
+</div>
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10 flex flex-col items-center text-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wide mb-8 animate-fade-in-up">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                AI-Powered Security
+            </div>
+<h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6 max-w-4xl">
+                Is that link safe? <br class="hidden sm:block"/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">Check before you click.</span>
+</h1>
+<p class="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mb-10 leading-relaxed">
+                Advanced AI-powered phishing detection for emails and URLs. Protect yourself from malicious attacks in seconds.
+            </p>
+<div class="w-full max-w-2xl mx-auto relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary via-purple-500 to-primary rounded-xl opacity-20 group-hover:opacity-40 blur transition duration-500"></div>
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-xl flex flex-col sm:flex-row p-2 gap-2 border border-slate-200 dark:border-slate-700">
+<div class="flex-grow flex items-center px-4 relative">
+<span class="material-symbols-outlined text-slate-400 mr-3 pointer-events-none select-none">link</span>
+<input aria-label="URL or email content to scan" class="w-full h-12 bg-transparent border-none text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 focus:outline-none text-base sm:text-lg truncate" placeholder="Paste a URL or email content here..." type="text"/>
+</div>
+<button class="flex-shrink-0 bg-primary hover:bg-primary-dark text-white h-12 px-8 rounded-lg font-bold text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-md">
+<span class="material-symbols-outlined filled" style="font-variation-settings: 'FILL' 1;">radar</span>
+                        Analyze Now
+                    </button>
+</div>
+</div>
+<div class="mt-8 flex flex-col sm:flex-row items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-2 bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
+<span class="material-symbols-outlined text-green-500" style="font-size: 20px;">verified_user</span>
+<span class="font-medium">10,000+ URLs scanned today</span>
+</div>
+<div class="hidden sm:block w-1 h-1 bg-slate-300 rounded-full"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-yellow-500" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-size: 16px; font-variation-settings: 'FILL' 1;">star</span>
+<span class="ml-1">Trusted by thousands</span>
+</div>
+</div>
+<div class="mt-24 grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-4xl text-left">
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<h3 class="font-bold text-slate-900 dark:text-white">Real-time Analysis</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Instant results powered by advanced machine learning models.</p>
+</div>
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<h3 class="font-bold text-slate-900 dark:text-white">AI Detection</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Detects sophisticated phishing patterns that bypass traditional filters.</p>
+</div>
+<div class="flex flex-col gap-3 p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<h3 class="font-bold text-slate-900 dark:text-white">Secure &amp; Private</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Your data is processed securely and never shared with third parties.</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-slate-500 dark:text-slate-400 text-sm">
+                © 2024 PhishGuard. All rights reserved.
+            </div>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white text-sm transition-colors" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white text-sm transition-colors" href="#">Terms of Service</a>
+<a class="text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white text-sm transition-colors" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+</body></html>

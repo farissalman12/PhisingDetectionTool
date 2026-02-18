@@ -15,8 +15,8 @@ export class IPAddressRule implements IRule {
       if (this.ipv4Regex.test(hostname)) {
         return {
           ruleName: 'IP Address Check',
-          score: 75,
-          details: `The URL uses an IP address (${hostname}) instead of a domain name. This is a common phishing indicator.`
+          score: 50,
+          details: `The URL uses an IP address (${hostname}) instead of a domain name. This is a common phishing indicator.`,
         };
       }
 

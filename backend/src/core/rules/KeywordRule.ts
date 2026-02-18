@@ -5,19 +5,35 @@ import { URL } from 'url';
 
 export class KeywordRule implements IRule {
   private readonly suspiciousKeywords = [
-    'login', 'signin', 'sign-in', 'verify', 'account', 'secure', 
-    'update', 'confirm', 'banking', 'wallet', 'paypal', 'support',
-    'admin', 'service', 'recover'
+    'login',
+    'signin',
+    'sign-in',
+    'verify',
+    'account',
+    'secure',
+    'update',
+    'confirm',
+    'banking',
+    'wallet',
+    'paypal',
+    'support',
+    'admin',
+    'service',
+    'recover',
   ];
 
   public async scan(input: IScanRequest): Promise<IRuleResult | null> {
     try {
       const parsedUrl = new URL(input.url);
-      const urlString = (parsedUrl.hostname + parsedUrl.pathname + parsedUrl.search).toLowerCase();
-      
+      const urlString = (
+        parsedUrl.hostname +
+        parsedUrl.pathname +
+        parsedUrl.search
+      ).toLowerCase();
+
       const foundKeywords: string[] = [];
 
-      this.suspiciousKeywords.forEach(keyword => {
+      this.suspiciousKeywords.forEach((keyword) => {
         if (urlString.includes(keyword)) {
           foundKeywords.push(keyword);
         }
@@ -29,7 +45,7 @@ export class KeywordRule implements IRule {
         return {
           ruleName: 'Suspicious Keyword Check',
           score: totalScore,
-          details: `The URL contains suspicious keywords: ${foundKeywords.join(', ')}.`
+          details: `The URL contains suspicious keywords: ${foundKeywords.join(', ')}.`,
         };
       }
 

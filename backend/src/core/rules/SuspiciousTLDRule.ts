@@ -5,8 +5,23 @@ import { URL } from 'url';
 
 export class SuspiciousTLDRule implements IRule {
   private readonly riskyTLDs = new Set([
-    'xyz', 'top', 'ru', 'cn', 'gq', 'ml', 'cf', 'tk', 'ga', 
-    'work', 'date', 'kim', 'zip', 'review', 'country', 'stream', 'download'
+    'xyz',
+    'top',
+    'ru',
+    'cn',
+    'gq',
+    'ml',
+    'cf',
+    'tk',
+    'ga',
+    'work',
+    'date',
+    'kim',
+    'zip',
+    'review',
+    'country',
+    'stream',
+    'download',
   ]);
 
   public async scan(input: IScanRequest): Promise<IRuleResult | null> {
@@ -14,7 +29,7 @@ export class SuspiciousTLDRule implements IRule {
       const parsedUrl = new URL(input.url);
       const hostname = parsedUrl.hostname;
       const parts = hostname.split('.');
-      
+
       if (parts.length < 2) return null; // e.g. "localhost"
 
       const tld = parts[parts.length - 1].toLowerCase();
@@ -23,7 +38,7 @@ export class SuspiciousTLDRule implements IRule {
         return {
           ruleName: 'Suspicious TLD Check',
           score: 20,
-          details: `The URL uses a high-risk Top-Level Domain (.${tld}) often associated with phishing campaigns.`
+          details: `The URL uses a high-risk Top-Level Domain (.${tld}) often associated with phishing campaigns.`,
         };
       }
 

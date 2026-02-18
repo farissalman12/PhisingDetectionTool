@@ -1,4 +1,6 @@
 import { PhishingScanner } from './core/services/PhishingScanner';
+import { ReputationService } from './core/services/ReputationService';
+import { AiAnalysisService } from './core/services/AiAnalysisService';
 
 async function main() {
   const url = process.argv[2];
@@ -9,7 +11,9 @@ async function main() {
   }
 
   console.log(`Scanning URL: ${url}...`);
-  const scanner = new PhishingScanner();
+  const reputationService = new ReputationService();
+  const aiAnalysisService = new AiAnalysisService();
+  const scanner = new PhishingScanner(reputationService, aiAnalysisService);
   const result = await scanner.scan(url);
 
   console.log(JSON.stringify(result, null, 2));

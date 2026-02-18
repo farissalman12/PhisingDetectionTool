@@ -34,4 +34,48 @@ This project demonstrates rigorous security engineering practices, including:
 *   `/scripts`: Utility and deployment scripts.
 
 ## Getting Started
-*(Installation instructions will be added in Phase 2)*
+
+### Prerequisites
+*   Node.js (v18+)
+*   Docker & Docker Compose (optional, for production build)
+*   PostgreSQL (if running locally without Docker)
+
+### Installation (Local Dev)
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-repo/phishguard.git
+    cd phishguard
+    ```
+
+2.  **Setup Backend**:
+    ```bash
+    cd backend
+    npm install
+    # Set up .env (copy from .env.production template)
+    npx prisma migrate dev
+    npm run start:dev
+    ```
+
+3.  **Setup Frontend**:
+    ```bash
+    cd frontend
+    npm install
+    npm run dev
+    ```
+
+4.  **Access the App**:
+    *   Frontend: `http://localhost:5173`
+    *   Backend API: `http://localhost:3000`
+
+### Installation (Docker Production)
+```bash
+docker-compose up --build
+```
+Access at `http://localhost`.
+
+## Architecture & Security Features
+*   **Authentication**: JWT-based stateless auth with bcrypt password hashing.
+*   **Scoring Engine**: Weighted formula ($0.5 \times Rep + 0.3 \times Heu + 0.2 \times AI$).
+*   **AI Analysis**: Simulation service analyzing semantic content for urgency and credential theft patterns.
+*   **Rate Limiting**: ThrottlerModule configured for API protection.
+*   **Containerization**: Optimized Dockerfiles for multi-stage builds.
