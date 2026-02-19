@@ -14,10 +14,14 @@ services:
     startCommand: npx prisma migrate deploy && npm run start:prod
     envVars:
       - key: DATABASE_URL
-        sync: false # User will provide the Neon Connection String here
+        fromDatabase:
+          name: phishing-tool-db
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: SAFE_BROWSING_API_KEY
+        sync: false
+      - key: VIRUSTOTAL_API_KEY
         sync: false
       - key: NODE_ENV
         value: production
