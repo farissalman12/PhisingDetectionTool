@@ -16,6 +16,11 @@ $$
 ### Critical Override
 If **any** Reputation Engine returns a "Malicious" verdict (e.g., Google Safe Browsing says "Phishing"), the Total Score is automatically set to **100**.
 
+### Dynamic Boosts
+To prevent false negatives when Reputation data is unavailable (e.g., new domains), the system applies dynamic boosts:
+1.  **Heuristic Boost**: If `Reputation == 0` AND `Heuristics > 40`, the Total Score is raised to match the Heuristic Score.
+2.  **AI Boost**: If `AI Score > 70` (indicating high urgency or credential harvesting), the Total Score is raised to match the AI Score, ensuring email-based threats are caught even without malicious URLs.
+
 ---
 
 ## Component Scoring

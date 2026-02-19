@@ -57,6 +57,19 @@ export class PhishingScanner {
     let totalScore =
       0.5 * reputationScore + 0.3 * heuristicScore + 0.2 * aiScore;
 
+    // Dynamic Adjustment: If Reputation is unknown (0) but Heuristics are strong (> 40),
+    // we don't want the 0 reputation to drag the score down too much.
+    // In this case, we allow Heuristics to drive the score more.
+    if (reputationScore === 0 && heuristicScore > 40) {
+      totalScore = Math.max(totalScore, heuristicScore);
+    }
+
+    // AI Boost: If AI detects high urgency/credentials (> 70), boost score.
+    // This is critical for "Email Mode" where the URL might be a placeholder or benign.
+    if (aiScore > 70) {
+      totalScore = Math.max(totalScore, aiScore);
+    }
+
     // Critical Override: If Reputation is malicious (score 100), total is 100.
     if (reputationScore === 100) {
       totalScore = 100;

@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateScanDto {
   @IsNotEmpty()
-  @IsUrl()
+  @IsUrl({ require_tld: false })
   url: string;
 
   @IsOptional()

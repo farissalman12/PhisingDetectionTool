@@ -30,8 +30,8 @@ export const ScanResult = () => {
   if (loading) return <div className="p-8 text-center">Loading result...</div>;
   if (!scan) return <div className="p-8 text-center">Scan not found.</div>;
 
-  const isHighRisk = scan.riskScore > 75;
-  const isSuspicious = scan.riskScore > 30 && scan.riskScore <= 75;
+  const isHighRisk = scan.riskScore >= 50;
+  const isSuspicious = scan.riskScore > 10 && scan.riskScore < 50;
   
   const riskColor = isHighRisk ? 'rose' : (isSuspicious ? 'orange' : 'emerald');
   const riskLabel = isHighRisk ? 'High Risk' : (isSuspicious ? 'Suspicious' : 'Safe');

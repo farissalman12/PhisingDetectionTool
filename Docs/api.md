@@ -26,17 +26,22 @@ Headers:
     ```json
     {
       "url": "http://sus-link.com/login",
-      "source": "email_body" // optional context
+      "content": "Subject: Urgent...\n\nPlease verify..." // Optional email content
     }
     ```
-*   **Response**: `202 Accepted`
+*   **Response**: `201 Created`
     ```json
     {
-      "scan_id": "550e8400-e29b-41d4-a716-446655440000",
-      "status": "pending",
-      "queue_position": 1
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "risk_score": 85,
+      "verdict": "phishing",
+      "totalScore": 85,
+      "heuristicScore": 60,
+      "aiScore": 90,
+      "details": { ... }
     }
     ```
+    *(Note: Scanning is currently synchronous for immediate feedback)*
 
 ### `GET /scan/{id}` (Poll for results)
 *   **Response**: `200 OK`

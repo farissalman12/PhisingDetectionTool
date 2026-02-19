@@ -29,19 +29,39 @@ export class AiAnalysisService {
 
     if (content) {
       const lowerContent = content.toLowerCase();
+      
+      // Urgency
       if (
         lowerContent.includes('urgent') ||
-        lowerContent.includes('immediately')
+        lowerContent.includes('immediately') ||
+        lowerContent.includes('24 hours')
       ) {
         score += 40;
         reasons.push('Content conveys artificial urgency.');
       }
+
+      // Credential Harvesting
       if (
-        lowerContent.includes('password') &&
+        (lowerContent.includes('password') || lowerContent.includes('credential')) &&
         lowerContent.includes('verify')
       ) {
         score += 50;
         reasons.push('Content requests credential verification.');
+      }
+
+      // Account Action
+      if (
+        lowerContent.includes('account') &&
+        (lowerContent.includes('suspended') || lowerContent.includes('locked') || lowerContent.includes('verify'))
+      ) {
+        score += 30;
+        reasons.push('Content threatens account suspension or requires verification.');
+      }
+
+      // Suspicious CTA
+      if (lowerContent.includes('click here') || lowerContent.includes('login now')) {
+        score += 20;
+        reasons.push('Content contains generic "Click Here" call-to-action.');
       }
     }
 

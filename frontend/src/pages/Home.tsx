@@ -1,14 +1,32 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 export const Home = () => {
+  const [activeTab, setActiveTab] = useState<'url' | 'email'>('url');
   const [url, setUrl] = useState('');
+  const [emailContent, setEmailContent] = useState('');
   const navigate = useNavigate();
 
   const handleScan = () => {
-    if (url) {
+    if (activeTab === 'url' && url) {
       navigate('/scan', { state: { url } });
+    } else if (activeTab === 'email' && emailContent) {
+      // 1. Extract URL from email content (simple regex)
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const foundUrl = emailContent.match(urlRegex);
+      
+      // 2. Determine URL to send
+      // If we find a link, we scan that link AND the content.
+      // If no link, we send a placeholder "http://email-analysis.local" so the backend
+      // knows to rely purely on the "AI Boost" (Content Analysis).
+      const targetUrl = foundUrl ? foundUrl[0] : 'http://email-analysis.local';
+
+      navigate('/scan', { 
+        state: { 
+          url: targetUrl,
+          content: emailContent 
+        } 
+      });
     }
   };
 
@@ -42,26 +60,83 @@ export const Home = () => {
       </p>
 
       {/* Input Section */}
-      <div className="w-full max-w-2xl mx-auto relative group">
+      <div className="w-full max-w-3xl mx-auto relative group">
         <div className="absolute -inset-1 bg-gradient-to-r from-primary via-purple-500 to-primary rounded-xl opacity-20 group-hover:opacity-40 blur transition duration-500"></div>
-        <div className="relative bg-white dark:bg-slate-800 rounded-xl shadow-xl flex flex-col sm:flex-row p-2 gap-2 border border-slate-200 dark:border-slate-700">
-          <div className="flex-grow flex items-center px-4 relative">
-            <span className="material-symbols-outlined text-slate-400 mr-3 pointer-events-none select-none">link</span>
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="Paste a URL or email content here..."
-              className="w-full h-12 bg-transparent border-none text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 focus:outline-none text-base sm:text-lg truncate"
-            />
+        
+        <div className="relative bg-white dark:bg-slate-800 rounded-xl shadow-xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700">
+          
+          {/* Tabs */}
+          <div className="flex border-b border-slate-200 dark:border-slate-700">
+            <button
+              onClick={() => setActiveTab('url')}
+              className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
+                activeTab === 'url' 
+                  ? 'bg-slate-50 dark:bg-slate-800/50 text-primary border-b-2 border-primary' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+              }`}
+            >
+              <span className="material-symbols-outlined">link</span>
+              URL Scanner
+            </button>
+            <button
+              onClick={() => setActiveTab('email')}
+              className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
+                activeTab === 'email' 
+                  ? 'bg-slate-50 dark:bg-slate-800/50 text-primary border-b-2 border-primary' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
+              }`}
+            >
+              <span className="material-symbols-outlined">mail</span>
+              Email Analyzer
+            </button>
           </div>
-          <button
-            onClick={handleScan}
-            className="flex-shrink-0 bg-primary hover:bg-primary-dark text-white h-12 px-8 rounded-lg font-bold text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-md"
-          >
-            <span className="material-symbols-outlined filled">radar</span>
-            Analyze Now
-          </button>
+
+          {/* Input Area */}
+          <div className="p-2">
+            {activeTab === 'url' ? (
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex-grow flex items-center px-4 relative h-12">
+                  <span className="material-symbols-outlined text-slate-400 mr-3 pointer-events-none select-none">search</span>
+                  <input
+                    type="text"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="Paste a suspicious URL here..."
+                    className="w-full h-full bg-transparent border-none text-slate-900 dark:text-white placeholder-slate-400 focus:ring-0 focus:outline-none text-base"
+                    onKeyDown={(e) => e.key === 'Enter' && handleScan()}
+                  />
+                </div>
+                <button
+                  onClick={handleScan}
+                  disabled={!url}
+                  className="flex-shrink-0 bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white h-12 px-8 rounded-lg font-bold text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-sm transform active:scale-95"
+                >
+                  Analyze
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2 p-2">
+                 <div className="relative">
+                  <textarea
+                    value={emailContent}
+                    onChange={(e) => setEmailContent(e.target.value)}
+                    placeholder="Paste the full email content (headers & body) here..."
+                    className="w-full h-32 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none text-sm resize-none"
+                  />
+                  <span className="absolute bottom-3 right-3 material-symbols-outlined text-slate-400 pointer-events-none">content_paste</span>
+                 </div>
+                 <button
+                  onClick={handleScan}
+                  disabled={!emailContent}
+                  className="w-full bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white h-12 px-8 rounded-lg font-bold text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-sm transform active:scale-95"
+                >
+                  <span className="material-symbols-outlined filled">security</span>
+                  Analyze Email
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
 
@@ -69,7 +144,7 @@ export const Home = () => {
       <div className="mt-8 flex flex-col sm:flex-row items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
         <div className="flex items-center gap-2 bg-white dark:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
           <span className="material-symbols-outlined text-green-500 text-xl">verified_user</span>
-          <span className="font-medium">10,000+ URLs scanned today</span>
+          <span className="font-medium">10,000+ items scanned today</span>
         </div>
         <div className="hidden sm:block w-1 h-1 bg-slate-300 rounded-full"></div>
         <div className="flex items-center gap-1">

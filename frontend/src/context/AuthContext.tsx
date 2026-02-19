@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, authService } from '../services/api';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { authService, type User } from '../services/api';
 import { jwtDecode } from 'jwt-decode';
 
 interface AuthContextType {
@@ -11,7 +11,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>(null!);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
