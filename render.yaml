@@ -19,13 +19,13 @@ services:
       - key: NODE_ENV
         value: production
 
-  # 2. Frontend Service (React Static Site)
-  - type: site
+  # 2. Frontend Service (Served via Node container for stability)
+  - type: web
     name: phishing-tool-frontend
-    env: static
+    env: node
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishDir: dist
+    startCommand: npx serve -s dist -l $PORT
     envVars:
       - key: VITE_API_URL
         fromService:
