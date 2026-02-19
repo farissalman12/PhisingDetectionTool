@@ -79,15 +79,15 @@ export const authService = {
 
 export const scanService = {
   analyzeUrl: async (url: string) => {
-    const response = await api.post<BackendScan>('/scan', { url });
+    const response = await api.post<BackendScan>('/api/v1/scan', { url });
     return mapToFrontend(response.data);
   },
   getScan: async (id: string) => {
-    const response = await api.get<BackendScan>(`/scan/${id}`);
+    const response = await api.get<BackendScan>(`/api/v1/scan/${id}`);
     return mapToFrontend(response.data);
   },
   getRecentScans: async (limit: number = 10, offset: number = 0) => {
-    const response = await api.get<BackendScan[]>(`/scan?limit=${limit}&offset=${offset}`);
+    const response = await api.get<BackendScan[]>(`/api/v1/scan?limit=${limit}&offset=${offset}`);
     return response.data.map(mapToFrontend);
   },
 };
