@@ -204,42 +204,39 @@ export const ScanResult = () => {
                     </span>
                 </div>
                 <div className="divide-y divide-slate-200 dark:divide-slate-800">
-                    {/* Simulated Heuristic Items (since backend provides aggregated rules, we map them) */}
-                     {/* 1. Keywords */}
-                    <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                        <div className="flex flex-col">
-                            <p className="text-sm font-semibold text-slate-900 dark:text-white">Suspicious Keywords</p>
-                            <p className="text-xs text-slate-500">Checks for words like 'login', 'verify'</p>
+                    {/* Dynamic Heuristic Rules */}
+                    {scan.rules && scan.rules.length > 0 ? (
+                      scan.rules.map((rule, index) => (
+                        <div key={index} className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                            <div className="flex flex-col">
+                                <p className="text-sm font-semibold text-slate-900 dark:text-white">{rule.ruleName}</p>
+                                <p className="text-xs text-slate-500 max-w-[200px] truncate" title={rule.details}>{rule.details}</p>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded text-rose-600 bg-rose-50 dark:bg-rose-900/10">
+                                <span className="material-symbols-outlined text-[16px]">cancel</span>
+                                Failed (+{rule.score})
+                            </div>
                         </div>
-                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.heuristicScore > 10 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
-                            <span className="material-symbols-outlined text-[16px]">{scan.heuristicScore > 10 ? 'cancel' : 'check_circle'}</span>
-                            {scan.heuristicScore > 10 ? 'Failed' : 'Pass'}
-                        </div>
-                    </div>
+                      ))
+                    ) : (
+                      <div className="px-5 py-8 text-center text-sm text-slate-500 dark:text-slate-400 italic">
+                        No specific heuristic violations found.
+                      </div>
+                    )}
 
-                    {/* 2. TLD Check */}
-                     <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                        <div className="flex flex-col">
-                            <p className="text-sm font-semibold text-slate-900 dark:text-white">Domain Safety (TLD)</p>
-                            <p className="text-xs text-slate-500">Checks for high-risk extensions (.xyz, .ru)</p>
-                        </div>
-                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.heuristicScore > 30 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
-                            <span className="material-symbols-outlined text-[16px]">{scan.heuristicScore > 30 ? 'cancel' : 'check_circle'}</span>
-                             {scan.heuristicScore > 30 ? 'Failed' : 'Pass'}
-                        </div>
-                    </div>
-
-                     {/* 3. AI Analysis */}
-                     <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                        <div className="flex flex-col">
-                            <p className="text-sm font-semibold text-slate-900 dark:text-white">AI Content Analysis</p>
-                            <p className="text-xs text-slate-500">Semantic analysis of text content</p>
-                        </div>
-                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.aiScore > 30 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
-                            <span className="material-symbols-outlined text-[16px]">{scan.aiScore > 30 ? 'cancel' : 'check_circle'}</span>
-                             {scan.aiScore > 30 ? 'Flagged' : 'Clean'}
-                        </div>
-                    </div>
+                     {/* AI Analysis Summary if available */}
+                     {scan.aiExplanation && (
+                       <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors border-t border-slate-200 dark:border-slate-800">
+                          <div className="flex flex-col">
+                              <p className="text-sm font-semibold text-slate-900 dark:text-white">AI Context Analysis</p>
+                              <p className="text-xs text-slate-500 line-clamp-2" title={scan.aiExplanation}>{scan.aiExplanation}</p>
+                          </div>
+                          <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.aiScore > 30 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
+                              <span className="material-symbols-outlined text-[16px]">{scan.aiScore > 30 ? 'cancel' : 'check_circle'}</span>
+                               {scan.aiScore > 30 ? `Flagged (+${scan.aiScore})` : 'Clean'}
+                          </div>
+                      </div>
+                     )}
                 </div>
             </div>
 

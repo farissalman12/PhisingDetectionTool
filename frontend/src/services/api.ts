@@ -2,10 +2,21 @@ import axios from 'axios';
 
 
 
+export interface RuleResult {
+  ruleName: string;
+  score: number;
+  details: string;
+}
+
 export interface Scan {
   id: string;
   url: string;
   riskScore: number;
+  heuristicScore: number;
+  reputationScore: number;
+  aiScore: number;
+  aiExplanation?: string;
+  rules: RuleResult[];
   status: string;
   createdAt: string;
 }
@@ -21,45 +32,38 @@ interface BackendScan {
   id: string;
   input_content: string;
   risk_score: number;
+  heuristicScore?: number;
+  reputationScore?: number;
+  aiScore?: number;
+  aiExplanation?: string;
+  rules?: RuleResult[];
   verdict: string;
   created_at: string;
   detailed_report: any;
 }
 
-// 1. Get Base URL from Environment
-let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// ... unchanged code ...
 
-// 2. Render Blueprint Fix: If "host" property is used, it might lack protocol.
-if (baseURL && !baseURL.startsWith('http')) {
-  baseURL = `https://${baseURL}`;
-}
+const mapToFrontend = (data: BackendScan): Scan => {
+  // Parsing detailed_report if it's a string (SQLite storage) or using top-level props
+  const detailed = typeof data.detailed_report === 'string' 
+    ? JSON.parse(data.detailed_report) 
+    : data.detailed_report || {};
 
-const api = axios.create({
-  baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// Add a request interceptor to attach the Token
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-const mapToFrontend = (data: BackendScan): Scan => ({
-  id: data.id,
-  url: data.input_content,
-  riskScore: data.risk_score,
-  status: data.verdict,
-  createdAt: data.created_at,
-});
+  return {
+    id: data.id,
+    url: data.input_content,
+    riskScore: data.risk_score,
+    // Prefer top-level properties (fresh scan), fallback to detailed_report (historical)
+    heuristicScore: data.heuristicScore ?? detailed.heuristicScore ?? 0,
+    reputationScore: data.reputationScore ?? detailed.reputationScore ?? 0,
+    aiScore: data.aiScore ?? detailed.aiScore ?? 0,
+    aiExplanation: data.aiExplanation ?? detailed.aiExplanation,
+    rules: data.rules ?? detailed.rules ?? [],
+    status: data.verdict,
+    createdAt: data.created_at,
+  };
+};
 
 export const authService = {
   login: async (email: string, password: string) => {
