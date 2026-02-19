@@ -265,3 +265,6 @@ export const ScanResult = () => {
             </div>
         </div>
       </div>
+    </div>
+  );
+};
