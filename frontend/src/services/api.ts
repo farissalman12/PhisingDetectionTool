@@ -42,7 +42,32 @@ interface BackendScan {
   detailed_report: any;
 }
 
-// ... unchanged code ...
+// 1. Get Base URL from Environment
+let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+// 2. Render Blueprint Fix: If "host" property is used, it might lack protocol.
+if (baseURL && !baseURL.startsWith('http')) {
+  baseURL = `https://${baseURL}`;
+}
+
+const api = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Add a request interceptor to attach the Token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 const mapToFrontend = (data: BackendScan): Scan => {
   // Parsing detailed_report if it's a string (SQLite storage) or using top-level props
