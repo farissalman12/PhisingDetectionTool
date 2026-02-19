@@ -125,27 +125,38 @@ export const ScanResult = () => {
         <div className="p-6 grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Risk Score Gauge */}
           <div className="md:col-span-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-6">
-            <div className="relative w-48 h-24 mb-4">
-              {/* Background Grey Arch */}
-              <div 
-                className="absolute inset-0 w-full h-full rounded-t-full bg-slate-100 dark:bg-slate-800"
-              ></div>
-
-              {/* Colored Fill Arch */}
-              <div 
-                className={`absolute inset-0 w-full h-full rounded-t-full transition-all duration-1000 ease-out`}
-                style={{
-                  background: `conic-gradient(from 270deg at 50% 100%, currentColor 0deg, currentColor ${scan.riskScore * 1.8}deg, transparent ${scan.riskScore * 1.8}deg, transparent 180deg)`,
-                  color: riskLevel === 'high' ? '#e11d48' : (riskLevel === 'medium' ? '#ea580c' : '#10b981')
-                }}
-              ></div>
+            <div className="relative w-48 h-24 mb-4 flex items-end justify-center">
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 200 100">
+                {/* Background Track */}
+                <path 
+                  d="M 20 100 A 80 80 0 0 1 180 100" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="24" 
+                  strokeLinecap="round"
+                  className="text-slate-100 dark:text-slate-800"
+                />
+                
+                {/* Foreground Fill */}
+                <path 
+                  d="M 20 100 A 80 80 0 0 1 180 100" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="24" 
+                  strokeLinecap="round"
+                  className={`${config.scoreColor} transition-[stroke-dashoffset] duration-1000 ease-out`}
+                  strokeDasharray="251.2"
+                  strokeDashoffset={251.2 * (1 - scan.riskScore / 100)}
+                />
+              </svg>
               
-              {/* Inner White Cutout (Mask) */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-36 h-18 bg-white dark:bg-[#1a1929] rounded-t-full flex items-end justify-center pb-2">
+              {/* Score Text */}
+              <div className="absolute bottom-0 mb-[-5px] flex flex-col items-center">
                  <span className={`text-5xl font-extrabold tracking-tighter ${config.scoreColor}`}>{scan.riskScore}</span>
               </div>
             </div>
-            <div className="text-center mt-2">
+            
+            <div className="text-center mt-4">
               <p className="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide uppercase">Risk Score</p>
               <p className={`text-sm font-medium mt-1 ${config.scoreColor}`}>{config.label}</p>
             </div>
