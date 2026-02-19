@@ -3,6 +3,7 @@ services:
   - type: web
     name: phishing-tool-backend
     env: node
+    plan: free # Force Free Tier
     rootDir: backend
     buildCommand: |
       npm install
@@ -23,6 +24,7 @@ services:
   - type: web
     name: phishing-tool-frontend
     env: node
+    plan: free # Force Free Tier
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npx serve -s dist -l $PORT
