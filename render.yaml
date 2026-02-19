@@ -1,0 +1,34 @@
+services:
+  # 1. Backend Service (NestJS API)
+  - type: web
+    name: phishing-tool-backend
+    env: node
+    rootDir: backend
+    buildCommand: |
+      npm install
+      npx prisma generate
+      npm run build
+    startCommand: npx prisma migrate deploy && npm run start:prod
+    envVars:
+      - key: DATABASE_URL
+        sync: false # User will provide the Neon Connection String here
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SAFE_BROWSING_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
+
+  # 2. Frontend Service (React Static Site)
+  - type: static
+    name: phishing-tool-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: phishing-tool-backend
+          property: url
