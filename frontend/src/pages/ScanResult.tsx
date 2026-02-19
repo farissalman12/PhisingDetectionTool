@@ -129,12 +129,6 @@ export const ScanResult = () => {
               {/* Background Grey Arch */}
               <div 
                 className="absolute inset-0 w-full h-full rounded-t-full bg-slate-100 dark:bg-slate-800"
-                style={{
-                    background: `conic-gradient(from 180deg at 50% 100%, var(--tw-gradient-stops))`, 
-                    '--tw-gradient-from': '#f1f5f9', // slate-100
-                    '--tw-gradient-to': '#f1f5f9',
-                    '--tw-gradient-stops': 'var(--tw-gradient-from), var(--tw-gradient-to)'
-                } as any}
               ></div>
 
               {/* Colored Fill Arch */}
