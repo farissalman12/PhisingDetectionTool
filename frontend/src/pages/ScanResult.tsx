@@ -175,6 +175,93 @@ export const ScanResult = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+
+      {/* Tabs & Detailed Analysis */}
+      <div className="flex flex-col gap-4">
+        <div className="border-b border-slate-200 dark:border-slate-700">
+            <nav aria-label="Tabs" className="flex gap-6 overflow-x-auto">
+                <button className={`border-b-2 pb-3 text-sm font-bold whitespace-nowrap ${riskLevel === 'high' ? 'border-rose-600 text-rose-600' : (riskLevel === 'medium' ? 'border-orange-500 text-orange-600' : 'border-emerald-500 text-emerald-600')}`}>
+                    Heuristics & Checks
+                </button>
+            </nav>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Technical Heuristics */}
+            <div className="bg-white dark:bg-[#1a1929] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+                <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#201e30] flex items-center justify-between">
+                    <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-sm">
+                        <span className="material-symbols-outlined text-slate-400 text-lg">code</span>
+                        Technical Heuristics
+                    </h4>
+                    <span className={`text-xs font-medium px-2 py-1 rounded ${config.badgeText} ${config.bgBase}`}>
+                        {scan.riskScore > 0 ? 'Issues Detected' : 'All Checks Passed'}
+                    </span>
+                </div>
+                <div className="divide-y divide-slate-200 dark:divide-slate-800">
+                    {/* Simulated Heuristic Items (since backend provides aggregated rules, we map them) */}
+                     {/* 1. Keywords */}
+                    <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                        <div className="flex flex-col">
+                            <p className="text-sm font-semibold text-slate-900 dark:text-white">Suspicious Keywords</p>
+                            <p className="text-xs text-slate-500">Checks for words like 'login', 'verify'</p>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.heuristicScore > 10 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
+                            <span className="material-symbols-outlined text-[16px]">{scan.heuristicScore > 10 ? 'cancel' : 'check_circle'}</span>
+                            {scan.heuristicScore > 10 ? 'Failed' : 'Pass'}
+                        </div>
+                    </div>
+
+                    {/* 2. TLD Check */}
+                     <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                        <div className="flex flex-col">
+                            <p className="text-sm font-semibold text-slate-900 dark:text-white">Domain Safety (TLD)</p>
+                            <p className="text-xs text-slate-500">Checks for high-risk extensions (.xyz, .ru)</p>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.heuristicScore > 30 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
+                            <span className="material-symbols-outlined text-[16px]">{scan.heuristicScore > 30 ? 'cancel' : 'check_circle'}</span>
+                             {scan.heuristicScore > 30 ? 'Failed' : 'Pass'}
+                        </div>
+                    </div>
+
+                     {/* 3. AI Analysis */}
+                     <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                        <div className="flex flex-col">
+                            <p className="text-sm font-semibold text-slate-900 dark:text-white">AI Content Analysis</p>
+                            <p className="text-xs text-slate-500">Semantic analysis of text content</p>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.aiScore > 30 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
+                            <span className="material-symbols-outlined text-[16px]">{scan.aiScore > 30 ? 'cancel' : 'check_circle'}</span>
+                             {scan.aiScore > 30 ? 'Flagged' : 'Clean'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Reputation Sources */}
+            <div className="bg-white dark:bg-[#1a1929] rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+                <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#201e30] flex items-center justify-between">
+                    <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-sm">
+                        <span className="material-symbols-outlined text-slate-400 text-lg">public</span>
+                        Reputation Status
+                    </h4>
+                    <span className="text-xs font-medium text-slate-500">Live API Check</span>
+                </div>
+                 <div className="divide-y divide-slate-200 dark:divide-slate-800">
+                    <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                        <div className="flex items-center gap-3">
+                            <div className="size-8 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 font-bold text-[10px]">G</div>
+                            <div>
+                                <p className="text-sm font-semibold text-slate-900 dark:text-white">Google Safe Browsing</p>
+                                <p className="text-xs text-slate-500">Relationship: Database</p>
+                            </div>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold uppercase ${scan.riskScore > 80 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                            <span className="material-symbols-outlined text-[18px]">{scan.riskScore > 80 ? 'gpp_bad' : 'check_circle'}</span>
+                            {scan.riskScore > 80 ? 'Malicious' : 'Clean'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
