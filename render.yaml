@@ -20,7 +20,7 @@ services:
         value: production
 
   # 2. Frontend Service (React Static Site)
-  - type: static
+  - type: site
     name: phishing-tool-frontend
     env: static
     rootDir: frontend
