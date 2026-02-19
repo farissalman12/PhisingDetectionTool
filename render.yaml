@@ -39,3 +39,9 @@ services:
           type: web
           name: phishing-tool-backend
           property: host
+
+databases:
+  - name: phishing-tool-db
+    databaseName: phishing_tool
+    user: phishing_user
+    plan: free # Force Free Tier
