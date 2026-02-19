@@ -199,7 +199,7 @@ export const ScanResult = () => {
                         <span className="material-symbols-outlined text-slate-400 text-lg">code</span>
                         Technical Heuristics
                     </h4>
-                    <span className={`text-xs font-medium px-2 py-1 rounded ${config.badgeText} ${config.bgBase}`}>
+                    <span className={`text-xs font-medium px-2 py-1 rounded ${config.badgeText} ${config.headerBg}`}>
                         {scan.riskScore > 0 ? 'Issues Detected' : 'All Checks Passed'}
                     </span>
                 </div>
