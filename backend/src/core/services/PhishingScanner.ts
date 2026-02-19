@@ -9,6 +9,8 @@ import { PunycodeRule } from '../rules/PunycodeRule';
 import { ReputationService } from './ReputationService';
 import { AiAnalysisService } from './AiAnalysisService';
 
+import { VirusTotalService } from './VirusTotalService';
+
 @Injectable()
 export class PhishingScanner {
   private rules: IRule[];
@@ -16,14 +18,9 @@ export class PhishingScanner {
   constructor(
     private reputationService: ReputationService,
     private aiAnalysisService: AiAnalysisService,
+    private virusTotalService: VirusTotalService,
   ) {
-    // Register default rules
-    this.rules = [
-      new IPAddressRule(),
-      new SuspiciousTLDRule(),
-      new KeywordRule(),
-      new PunycodeRule(),
-    ];
+    // ...
   }
 
   public async scan(url: string, content?: string): Promise<IScanResult> {
@@ -43,17 +40,24 @@ export class PhishingScanner {
     }
     heuristicScore = Math.min(heuristicScore, 100);
 
-    // 2. Reputation (50% weight)
-    const reputationResult =
-      await this.reputationService.checkSafeBrowsing(url);
-    const reputationScore = reputationResult.score; // 0 or 100
+    // 2. Reputation (Safe Browsing & VirusTotal)
+    const [reputationResult, vtResult] = await Promise.all([
+      this.reputationService.checkSafeBrowsing(url),
+      this.virusTotalService.checkUrl(url),
+    ]);
+
+    let reputationScore = reputationResult.score; // 0 or 100
+
+    // VT Logic: If VT says malicious > 1, it's definitely bad.
+    if (vtResult && vtResult.malicious > 0) {
+        reputationScore = 100;
+    }
 
     // 3. AI (20% weight)
     const aiResult = await this.aiAnalysisService.analyzeContent(url, content);
     const aiScore = aiResult.score;
 
     // 4. Additive Formula (Risk accumulates)
-    // We want the score to increase if ANY indicator is found.
     let totalScore = 0;
 
     // Reputation is the strongest indicator
@@ -61,8 +65,7 @@ export class PhishingScanner {
       totalScore += reputationScore; 
     }
 
-    // Add Heuristics (scaled down slightly so 1 keyword doesn't panic)
-    // e.g. 1 keyword (15) -> +15 risk. 
+    // Add Heuristics
     totalScore += heuristicScore;
 
     // Add AI Analysis
@@ -80,6 +83,7 @@ export class PhishingScanner {
       reputationScore,
       aiScore,
       aiExplanation: aiResult.explanation,
+      virusTotal: vtResult,
       rules: ruleResults,
       verdict: this.getVerdict(totalScore),
     };

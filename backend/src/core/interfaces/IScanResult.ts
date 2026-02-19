@@ -8,6 +8,7 @@ export interface IScanResult {
   reputationScore: number;
   aiScore: number;
   aiExplanation?: string;
+  virusTotal?: any;
   rules: IRuleResult[];
   verdict: ScanVerdict;
 }

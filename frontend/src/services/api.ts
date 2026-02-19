@@ -15,7 +15,16 @@ export interface Scan {
   heuristicScore: number;
   reputationScore: number;
   aiScore: number;
+  aiScore: number;
   aiExplanation?: string;
+  virusTotal?: {
+    malicious: number;
+    suspicious: number;
+    harmless: number;
+    undetected: number;
+    total: number;
+    permalink?: string;
+  };
   rules: RuleResult[];
   status: string;
   createdAt: string;
@@ -84,6 +93,7 @@ const mapToFrontend = (data: BackendScan): Scan => {
     reputationScore: data.reputationScore ?? detailed.reputationScore ?? 0,
     aiScore: data.aiScore ?? detailed.aiScore ?? 0,
     aiExplanation: data.aiExplanation ?? detailed.aiExplanation,
+    virusTotal: detailed.virusTotal, // Usually in detailed_report for now
     rules: data.rules ?? detailed.rules ?? [],
     status: data.verdict,
     createdAt: data.created_at,

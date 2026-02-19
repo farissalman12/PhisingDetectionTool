@@ -263,6 +263,25 @@ export const ScanResult = () => {
                             {scan.riskScore > 80 ? 'Malicious' : 'Clean'}
                         </div>
                     </div>
+
+                    {/* VirusTotal Check */}
+                    <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                        <div className="flex items-center gap-3">
+                            <div className="size-8 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 font-bold text-[10px]">VT</div>
+                            <div>
+                                <p className="text-sm font-semibold text-slate-900 dark:text-white">VirusTotal Analysis</p>
+                                <p className="text-xs text-slate-500">
+                                    {scan.virusTotal 
+                                        ? `${scan.virusTotal.malicious}/${scan.virusTotal.total} Engines Flagged` 
+                                        : 'Not Scanned / Unknown'}
+                                </p>
+                            </div>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold uppercase ${scan.virusTotal?.malicious ? 'text-rose-600' : 'text-emerald-600'}`}>
+                            <span className="material-symbols-outlined text-[18px]">{scan.virusTotal?.malicious ? 'bug_report' : 'verified_user'}</span>
+                            {scan.virusTotal?.malicious ? 'Malicious' : 'Clean'}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
