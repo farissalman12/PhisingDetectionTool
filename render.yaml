@@ -6,7 +6,9 @@ services:
     plan: free # Force Free Tier
     rootDir: backend
     buildCommand: |
-      npm install --include=dev
+    buildCommand: |
+      npm install -g @nestjs/cli
+      npm install
       npx prisma generate
       npm run build
     startCommand: npx prisma migrate deploy && npm run start:prod
