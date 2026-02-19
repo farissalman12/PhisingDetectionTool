@@ -78,8 +78,8 @@ export const authService = {
 };
 
 export const scanService = {
-  analyzeUrl: async (url: string) => {
-    const response = await api.post<BackendScan>('/api/v1/scan', { url });
+  analyzeUrl: async (url: string, content?: string) => {
+    const response = await api.post<BackendScan>('/api/v1/scan', { url, content });
     return mapToFrontend(response.data);
   },
   getScan: async (id: string) => {

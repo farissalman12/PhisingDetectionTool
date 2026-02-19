@@ -8,6 +8,7 @@ export const ScanProgress = () => {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState('Initializing scan...');
   const url = location.state?.url;
+  const content = location.state?.content;
 
   useEffect(() => {
     if (!url) {
@@ -18,7 +19,7 @@ export const ScanProgress = () => {
     const startScan = async () => {
       try {
         // Start the scan via API
-        const scan = await scanService.analyzeUrl(url);
+        const scan = await scanService.analyzeUrl(url, content);
         
         // Simulate progress (since backend is fast/synchronous for now)
         let currentProgress = 0;
