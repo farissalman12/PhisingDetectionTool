@@ -125,19 +125,35 @@ export const ScanResult = () => {
         <div className="p-6 grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Risk Score Gauge */}
           <div className="md:col-span-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-6">
-            <div className="relative w-40 h-20 mb-2">
-              <div className="absolute inset-0 w-full h-full rounded-t-full bg-slate-100 dark:bg-slate-800"></div>
+            <div className="relative w-48 h-24 mb-4">
+              {/* Background Grey Arch */}
               <div 
-                className={`absolute inset-0 w-full h-full rounded-t-full origin-bottom transition-all duration-1000 ${config.gaugeColor}`} 
-                style={{ transform: `rotate(${scan.riskScore * 1.8}deg)`, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }}
+                className="absolute inset-0 w-full h-full rounded-t-full bg-slate-100 dark:bg-slate-800"
+                style={{
+                    background: `conic-gradient(from 180deg at 50% 100%, var(--tw-gradient-stops))`, 
+                    '--tw-gradient-from': '#f1f5f9', // slate-100
+                    '--tw-gradient-to': '#f1f5f9',
+                    '--tw-gradient-stops': 'var(--tw-gradient-from), var(--tw-gradient-to)'
+                } as any}
               ></div>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-16 bg-white dark:bg-[#1a1929] rounded-t-full flex items-end justify-center pb-1">
-                <span className={`text-3xl font-bold ${config.scoreColor}`}>{scan.riskScore}</span>
+
+              {/* Colored Fill Arch */}
+              <div 
+                className={`absolute inset-0 w-full h-full rounded-t-full transition-all duration-1000 ease-out`}
+                style={{
+                  background: `conic-gradient(from 270deg at 50% 100%, currentColor 0deg, currentColor ${scan.riskScore * 1.8}deg, transparent ${scan.riskScore * 1.8}deg, transparent 180deg)`,
+                  color: riskLevel === 'high' ? '#e11d48' : (riskLevel === 'medium' ? '#ea580c' : '#10b981')
+                }}
+              ></div>
+              
+              {/* Inner White Cutout (Mask) */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-36 h-18 bg-white dark:bg-[#1a1929] rounded-t-full flex items-end justify-center pb-2">
+                 <span className={`text-5xl font-extrabold tracking-tighter ${config.scoreColor}`}>{scan.riskScore}</span>
               </div>
             </div>
-            <div className="text-center">
-              <p className="text-sm font-bold text-slate-700 dark:text-slate-200">Risk Score</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{config.label}</p>
+            <div className="text-center mt-2">
+              <p className="text-sm font-bold text-slate-700 dark:text-slate-200 tracking-wide uppercase">Risk Score</p>
+              <p className={`text-sm font-medium mt-1 ${config.scoreColor}`}>{config.label}</p>
             </div>
           </div>
 
