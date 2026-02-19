@@ -26,8 +26,16 @@ interface BackendScan {
   detailed_report: any;
 }
 
-export const api = axios.create({
-  baseURL: API_URL,
+// 1. Get Base URL from Environment
+let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+// 2. Render Blueprint Fix: If "host" property is used, it might lack protocol.
+if (baseURL && !baseURL.startsWith('http')) {
+  baseURL = `https://${baseURL}`;
+}
+
+const api = axios.create({
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
