@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -32,13 +32,23 @@ export class AuthService {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(data.password_hash, salt);
 
-    // Save user
-    const newUser = await this.usersService.create({
-      ...data,
-      password_hash: hash,
-    });
+    try {
+      // Save user
+      const newUser = await this.usersService.create({
+        ...data,
+        password_hash: hash,
+      });
 
-    const { password_hash, ...result } = newUser;
-    return result;
+      const { password_hash, ...result } = newUser;
+      return result;
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002' // Unique constraint failed
+      ) {
+        throw new ConflictException('User with this email already exists');
+      }
+      throw error;
+    }
   }
 }
