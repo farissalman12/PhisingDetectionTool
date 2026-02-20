@@ -27,6 +27,7 @@ export class ScanService {
     return {
       id: savedScan.id,
       created_at: savedScan.created_at,
+      input_content: url,
       risk_score: result.totalScore, // Explicitly map to snake_case for frontend compatibility
       ...result,
     };
