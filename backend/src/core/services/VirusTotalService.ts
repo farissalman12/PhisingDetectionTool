@@ -22,6 +22,8 @@ export class VirusTotalService {
     if (!this.apiKey) {
       this.logger.warn('VIRUSTOTAL_API_KEY is not set. Skipping VT check.');
       return null;
+    } else {
+        this.logger.log(`Checking VirusTotal for: ${url} (Key length: ${this.apiKey.length})`);
     }
 
     try {
@@ -38,6 +40,8 @@ export class VirusTotalService {
 
       const data = response.data?.data?.attributes?.last_analysis_stats;
       
+      this.logger.log(`VirusTotal Scan Success for ${url}: Malicious=${data?.malicious}`);
+
       if (!data) return null;
 
       return {
@@ -51,10 +55,11 @@ export class VirusTotalService {
 
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
+        this.logger.warn(`VirusTotal: URL not found in database: ${url}`);
         // URL not found in VT database -> Unknown/Clean-ish
         return { malicious: 0, suspicious: 0, harmless: 0, undetected: 0, total: 0 };
       }
-      this.logger.error(`VirusTotal API failed: ${error.message}`);
+      this.logger.error(`VirusTotal API failed: ${error.message} (Status: ${axios.isAxiosError(error) ? error.response?.status : 'Unknown'})`);
       return null;
     }
   }

@@ -20,7 +20,13 @@ export class PhishingScanner {
     private aiAnalysisService: AiAnalysisService,
     private virusTotalService: VirusTotalService,
   ) {
-    // ...
+    // Register default rules
+    this.rules = [
+      new IPAddressRule(),
+      new SuspiciousTLDRule(),
+      new KeywordRule(),
+      new PunycodeRule(),
+    ];
   }
 
   public async scan(url: string, content?: string): Promise<IScanResult> {
@@ -57,19 +63,31 @@ export class PhishingScanner {
     const aiResult = await this.aiAnalysisService.analyzeContent(url, content);
     const aiScore = aiResult.score;
 
-    // 4. Additive Formula (Risk accumulates)
+    // 4. Additive Formula with Weights (Risk accumulates)
     let totalScore = 0;
 
-    // Reputation is the strongest indicator
-    if (reputationScore > 0) {
-      totalScore += reputationScore; 
+    // Weights: Reputation (0.5), Heuristics (0.3), AI (0.2)
+    // The documented formula is Score = (0.5 * S_rep) + (0.3 * S_heu) + (0.2 * S_ai)
+    // Wait, the docs say S_rep is 0 or 100. If it's a weighted sum out of 100, the max is (0.5*100) + (0.3*100) + (0.2*100) = 100.
+    
+    totalScore = (0.5 * reputationScore) + (0.3 * heuristicScore) + (0.2 * aiScore);
+
+    // Dynamic Boosts (Documented in scoring.md)
+    // 1. Heuristic Boost: If Reputation == 0 AND Heuristics > 40, Total Score is raised to match Heuristic Score.
+    if (reputationScore === 0 && heuristicScore > 40) {
+        totalScore = Math.max(totalScore, heuristicScore);
+    }
+    
+    // 2. AI Boost: If AI Score > 70, Total Score is raised to match AI Score.
+    if (aiScore > 70) {
+        totalScore = Math.max(totalScore, aiScore);
     }
 
-    // Add Heuristics
-    totalScore += heuristicScore;
-
-    // Add AI Analysis
-    totalScore += aiScore;
+    // Critical Override is already handled above (reputationScore = 100)
+    // If reputation is 100, the weight brings it to 50 minimum. But wait, critical override means Total Score is 100!
+    if (reputationScore === 100) {
+        totalScore = 100;
+    }
 
     // Cap at 100
     totalScore = Math.min(totalScore, 100);
