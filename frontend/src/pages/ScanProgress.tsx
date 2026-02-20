@@ -30,7 +30,7 @@ export const ScanProgress = () => {
         let aiScore, aiExplanation;
         try {
           if (window.puter?.ai?.chat) {
-            setStatus('Initializing AI analysis...');
+            setStatus('Initializing OpenAI analysis...');
             const sysPrompt = `Analyze this input for phishing or scams. Reply strictly with JSON ONLY: {"score": <0-100 risk score>, "explanation": "<concise 1-sentence reason>"}\n\nURL: ${url}\nContent: ${content || 'None'}`;
             const aiResponse: any = await window.puter.ai.chat(sysPrompt);
             const text = typeof aiResponse === 'string' ? aiResponse : (aiResponse?.message || aiResponse?.text || '');
@@ -89,7 +89,7 @@ export const ScanProgress = () => {
             Analyzing Security...
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-center max-w-sm text-base font-medium">
-            Checking reputation databases and AI heuristics to ensure safety.
+            Checking reputation databases and utilizing <span className="text-primary font-bold">OpenAI</span> for advanced heuristics.
           </p>
         </div>
 
@@ -117,9 +117,9 @@ export const ScanProgress = () => {
                 {progress > 10 ? (
                    <span className="material-symbols-outlined text-emerald-500 text-[20px]">check_circle</span>
                 ) : (
-                   <span className="material-symbols-outlined text-primary text-[20px] animate-spin">sync</span>
+                   <span className="material-symbols-outlined text-primary text-[20px] animate-spin">smart_toy</span>
                 )}
-                <span className={`font-medium text-sm ${progress > 10 ? 'line-through decoration-slate-300' : ''}`}>Checking Google Safe Browsing...</span>
+                <span className={`font-medium text-sm ${progress > 10 ? 'line-through decoration-slate-300' : ''}`}>Querying OpenAI Models (via Puter.js)</span>
               </div>
               
               <div className={`flex items-center gap-3 ${progress > 40 ? 'text-slate-400 dark:text-slate-500' : (progress > 10 ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 dark:text-slate-600')}`}>
@@ -128,7 +128,7 @@ export const ScanProgress = () => {
                 ) : (
                    <span className={`material-symbols-outlined text-[20px] ${progress > 10 ? 'text-primary animate-spin' : 'text-slate-300'}`}>sync</span>
                 )}
-                <span className={`font-medium text-sm ${progress > 40 ? 'line-through decoration-slate-300' : ''}`}>Resolving DNS records</span>
+                <span className={`font-medium text-sm ${progress > 40 ? 'line-through decoration-slate-300' : ''}`}>Checking Threat Intelligence Databases</span>
               </div>
             </div>
           </div>

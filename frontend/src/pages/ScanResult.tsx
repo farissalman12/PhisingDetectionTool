@@ -228,7 +228,10 @@ export const ScanResult = () => {
                      {scan.aiExplanation && (
                        <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors border-t border-slate-200 dark:border-slate-800">
                           <div className="flex flex-col">
-                              <p className="text-sm font-semibold text-slate-900 dark:text-white">AI Context Analysis</p>
+                              <p className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                                <span className="material-symbols-outlined text-purple-500 text-[16px]">smart_toy</span>
+                                OpenAI Content Analysis
+                              </p>
                               <p className="text-xs text-slate-500 line-clamp-2" title={scan.aiExplanation}>{scan.aiExplanation}</p>
                           </div>
                           <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded ${scan.aiScore > 30 ? 'text-rose-600 bg-rose-50 dark:bg-rose-900/10' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/10'}`}>
@@ -282,6 +285,25 @@ export const ScanResult = () => {
                             {scan.virusTotal?.malicious ? 'Malicious' : 'Clean'}
                         </div>
                     </div>
+                    
+                    {/* OpenAI Check Added To Reputation Display */}
+                    {scan.aiExplanation && (
+                    <div className="px-5 py-3 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                        <div className="flex items-center gap-3">
+                            <div className="size-8 rounded bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 font-bold text-[10px]">AI</div>
+                            <div>
+                                <p className="text-sm font-semibold text-slate-900 dark:text-white">OpenAI Engine (Puter.js)</p>
+                                <p className="text-xs text-slate-500">
+                                    Analysis Score: {scan.aiScore}/100
+                                </p>
+                            </div>
+                        </div>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold uppercase ${scan.aiScore > 30 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                            <span className="material-symbols-outlined text-[18px]">{scan.aiScore > 30 ? 'warning' : 'verified_user'}</span>
+                            {scan.aiScore > 30 ? 'Flagged' : 'Clean'}
+                        </div>
+                    </div>
+                    )}
                 </div>
             </div>
         </div>
