@@ -43,7 +43,7 @@ export const ScanProgress = () => {
           }
         } catch(e) { console.warn("AI analysis skipped or failed:", e); }
 
-        setStatus('Querying threat intelligence databases...');
+        setStatus('Checking Google Safe Browsing & VirusTotal...');
         // 2. Start the scan via API
         const scan = await scanService.analyzeUrl(url, content, aiScore, aiExplanation);
         
@@ -128,7 +128,16 @@ export const ScanProgress = () => {
                 ) : (
                    <span className={`material-symbols-outlined text-[20px] ${progress > 10 ? 'text-primary animate-spin' : 'text-slate-300'}`}>sync</span>
                 )}
-                <span className={`font-medium text-sm ${progress > 40 ? 'line-through decoration-slate-300' : ''}`}>Checking Threat Intelligence Databases</span>
+                <span className={`font-medium text-sm ${progress > 40 ? 'line-through decoration-slate-300' : ''}`}>Checking Google Safe Browsing</span>
+              </div>
+
+              <div className={`flex items-center gap-3 ${progress > 70 ? 'text-slate-400 dark:text-slate-500' : (progress > 40 ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400 dark:text-slate-600')}`}>
+                 {progress > 70 ? (
+                   <span className="material-symbols-outlined text-emerald-500 text-[20px]">check_circle</span>
+                ) : (
+                   <span className={`material-symbols-outlined text-[20px] ${progress > 40 ? 'text-primary animate-spin' : 'text-slate-300'}`}>sync</span>
+                )}
+                <span className={`font-medium text-sm ${progress > 70 ? 'line-through decoration-slate-300' : ''}`}>Analyzing with VirusTotal</span>
               </div>
             </div>
           </div>
