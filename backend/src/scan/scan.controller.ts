@@ -38,6 +38,8 @@ export class ScanController {
       createScanDto.url,
       createScanDto.content,
       userId,
+      createScanDto.aiScore,
+      createScanDto.aiExplanation,
     );
   }
 

@@ -29,8 +29,8 @@ export class PhishingScanner {
     ];
   }
 
-  public async scan(url: string, content?: string): Promise<IScanResult> {
-    const request: IScanRequest = { url, content };
+  public async scan(url: string, content?: string, frontendAiScore?: number, frontendAiExplanation?: string): Promise<IScanResult> {
+    const request: IScanRequest = { url, content, aiScore: frontendAiScore, aiExplanation: frontendAiExplanation };
 
     // 1. Heuristics (30% weight)
     let heuristicScore = 0;
@@ -60,8 +60,14 @@ export class PhishingScanner {
     }
 
     // 3. AI (20% weight)
-    const aiResult = await this.aiAnalysisService.analyzeContent(url, content);
-    const aiScore = aiResult.score;
+    let aiScore = frontendAiScore ?? 0;
+    let aiExplanation = frontendAiExplanation ?? '';
+
+    if (frontendAiScore === undefined) {
+      const aiResult = await this.aiAnalysisService.analyzeContent(url, content);
+      aiScore = aiResult.score;
+      aiExplanation = aiResult.explanation;
+    }
 
     // 4. Additive Formula with Weights (Risk accumulates)
     let totalScore = 0;
@@ -100,7 +106,7 @@ export class PhishingScanner {
       heuristicScore,
       reputationScore,
       aiScore,
-      aiExplanation: aiResult.explanation,
+      aiExplanation,
       virusTotal: vtResult,
       rules: ruleResults,
       verdict: this.getVerdict(totalScore),

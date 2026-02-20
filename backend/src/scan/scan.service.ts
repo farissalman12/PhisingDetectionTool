@@ -9,9 +9,9 @@ export class ScanService {
     private scanner: PhishingScanner,
   ) {}
 
-  async scan(url: string, content?: string, userId?: string) {
+  async scan(url: string, content?: string, userId?: string, aiScore?: number, aiExplanation?: string) {
     // 1. Run the PhishingScanner logic
-    const result = await this.scanner.scan(url, content);
+    const result = await this.scanner.scan(url, content, aiScore, aiExplanation);
 
     // 2. Save the result to the database
     const savedScan = await this.prisma.scan.create({

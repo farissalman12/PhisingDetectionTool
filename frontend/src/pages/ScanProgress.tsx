@@ -17,26 +17,43 @@ export const ScanProgress = () => {
     }
 
     const startScan = async () => {
+      let interval: ReturnType<typeof setInterval>;
       try {
-        // Start the scan via API
-        const scan = await scanService.analyzeUrl(url, content);
-        
-        // Simulate progress (since backend is fast/synchronous for now)
+        // Start simulated progress
         let currentProgress = 0;
-        const interval = setInterval(() => {
-          currentProgress += 5;
-          setProgress(currentProgress);
-          
-          if (currentProgress < 30) setStatus('Checking reputation databases...');
-          else if (currentProgress < 60) setStatus('Analyzing URL heuristics...');
-          else if (currentProgress < 90) setStatus('Verifying SSL certificates...');
-          else setStatus('Finalizing results...');
+        interval = setInterval(() => {
+          currentProgress += Math.floor(Math.random() * 5) + 2;
+          if (currentProgress <= 85) setProgress(currentProgress);
+        }, 400);
 
-          if (currentProgress >= 100) {
-            clearInterval(interval);
-            navigate(`/result/${scan.id}`, { state: { scan } });
+        // 1. Puter AI Call
+        let aiScore, aiExplanation;
+        try {
+          if (window.puter?.ai?.chat) {
+            setStatus('Initializing AI analysis...');
+            const sysPrompt = `Analyze this input for phishing or scams. Reply strictly with JSON ONLY: {"score": <0-100 risk score>, "explanation": "<concise 1-sentence reason>"}\n\nURL: ${url}\nContent: ${content || 'None'}`;
+            const aiResponse: any = await window.puter.ai.chat(sysPrompt);
+            const text = typeof aiResponse === 'string' ? aiResponse : (aiResponse?.message || aiResponse?.text || '');
+            const match = text.match(/\{[\s\S]*\}/);
+            if (match) {
+              const parsed = JSON.parse(match[0]);
+              aiScore = parsed.score;
+              aiExplanation = parsed.explanation;
+            }
           }
-        }, 100);
+        } catch(e) { console.warn("AI analysis skipped or failed:", e); }
+
+        setStatus('Querying threat intelligence databases...');
+        // 2. Start the scan via API
+        const scan = await scanService.analyzeUrl(url, content, aiScore, aiExplanation);
+        
+        clearInterval(interval);
+        setProgress(100);
+        setStatus('Analysis complete!');
+        
+        setTimeout(() => {
+          navigate(`/result/${scan.id}`, { state: { scan } });
+        }, 400);
 
       } catch (error) {
         console.error('Scan failed:', error);

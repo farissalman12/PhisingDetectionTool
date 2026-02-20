@@ -8,4 +8,11 @@ export class CreateScanDto {
   @IsOptional()
   @IsString()
   content?: string;
+
+  @IsOptional()
+  aiScore?: number;
+
+  @IsOptional()
+  @IsString()
+  aiExplanation?: string;
 }
