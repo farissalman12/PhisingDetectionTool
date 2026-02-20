@@ -20,7 +20,7 @@ Headers:
 ---
 
 ## 2. Scans
-### `POST /scan` (Submit a new URL)
+### `POST /api/v1/scan` (Submit a new URL)
 *   **Auth**: Optional (Rate limit tighter for anon)
 *   **Body**:
     ```json
@@ -38,24 +38,24 @@ Headers:
       "totalScore": 85,
       "heuristicScore": 60,
       "aiScore": 90,
-      "details": { ... }
+      "rules": [],
+      "virusTotal": {},
+      "aiExplanation": "..." 
     }
     ```
     *(Note: Scanning is currently synchronous for immediate feedback)*
 
-### `GET /scan/{id}` (Poll for results)
+### `GET /api/v1/scan/{id}` (Retrieve scan results)
 *   **Response**: `200 OK`
     ```json
     {
       "id": "...",
       "status": "completed",
-      "score": 85,
-      "verdict": "high_risk",
-      "details": {
-        "heuristics": ["contains_ip_address", "suspicious_tld"],
-        "virus_total": { "positives": 5, "total": 90 },
-        "ai_analysis": "The text creates false urgency..."
-      },
+      "risk_score": 85,
+      "verdict": "phishing",
+      "rules": [],
+      "virusTotal": { "malicious": 5, "total": 90 },
+      "aiExplanation": "The text creates false urgency...",
       "created_at": "2023-10-27T10:00:00Z"
     }
     ```
@@ -63,7 +63,7 @@ Headers:
 ---
 
 ## 3. History
-### `GET /scan/history`
+### `GET /api/v1/scan` (Get scan history)
 *   **Auth**: Required
 *   **Query**: `?limit=10&offset=0`
 *   **Response**: `200 OK` (Array of scan summaries)

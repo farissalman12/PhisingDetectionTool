@@ -2,9 +2,8 @@
 
 ## Performance
 1.  **Latency**:
-    *   Cached Scan Result: < 100ms
     *   New Scan (Heuristics only): < 500ms
-    *   New Scan (Full with APIs): < 3000ms (Async processing required)
+    *   New Scan (Full with APIs): Depends on 3rd party API latency, targeting < 3000ms.
 2.  **Throughput**: Support 10 concurrent scans per second on the MVP infrastructure.
 
 ## Reliability

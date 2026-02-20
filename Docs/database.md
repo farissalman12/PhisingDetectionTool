@@ -11,7 +11,7 @@ erDiagram
         uuid id PK
         string email
         string password_hash
-        enum role "user, admin"
+        string role "USER or ADMIN"
         timestamp created_at
     }
 
@@ -20,8 +20,8 @@ erDiagram
         uuid user_id FK "nullable (for anon)"
         text input_content
         int risk_score "0-100"
-        enum verdict "safe, suspicious, phishing"
-        jsonb detailed_report
+        string verdict "safe, suspicious, phishing"
+        text detailed_report "JSON stringified"
         timestamp created_at
     }
 
@@ -43,7 +43,7 @@ erDiagram
 ### 2. `scans`
 *   The central ledger of the application.
 *   `input_content`: Stores the URL or email snippet.
-*   `detailed_report` (JSONB): Storing the full breakdown (VT results, AI explanation) as JSON allows flexibility. We don't need to query *inside* the report often, just retrieve it.
+*   `detailed_report` (String/Text): Storing the full breakdown (VT results, AI explanation) as a stringified JSON array/object.
 *   `user_id`: Nullable to allow anonymous scans (if we choose to support that), or for public-facing demo mode.
 
 ### 3. `blacklist_entries`
