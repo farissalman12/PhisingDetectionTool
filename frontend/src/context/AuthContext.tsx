@@ -17,22 +17,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token && token !== 'undefined' && token !== 'null') {
       try {
         const decoded = jwtDecode<User>(token);
         setUser(decoded);
       } catch (e) {
-        console.error('Invalid token', e);
+        console.error('Invalid token on load', e);
         localStorage.removeItem('token');
       }
+    } else {
+      localStorage.removeItem('token');
     }
     setIsLoading(false);
   }, []);
 
   const login = (token: string) => {
-    localStorage.setItem('token', token);
-    const decoded = jwtDecode<User>(token);
-    setUser(decoded);
+    if (!token || token === 'undefined' || token === 'null') return;
+    try {
+      localStorage.setItem('token', token);
+      const decoded = jwtDecode<User>(token);
+      setUser(decoded);
+    } catch (e) {
+      console.error('Login failed: Invalid token', e);
+      localStorage.removeItem('token');
+    }
   };
 
   const logout = () => {
