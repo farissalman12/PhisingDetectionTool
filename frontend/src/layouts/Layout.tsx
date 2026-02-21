@@ -24,15 +24,16 @@ export const Layout = ({ children }: LayoutProps) => {
                 <span className="text-xs font-medium text-slate-500 dark:text-slate-400 tracking-wide">by Faris Salman</span>
               </div>
             </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link to="/history" className="text-sm font-medium text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-white transition-colors">
-                History
-              </Link>
-            </div>
             <div className="flex items-center gap-3">
               {user ? (
                 <div className="flex items-center gap-4">
                   <span className="text-sm text-slate-600 dark:text-slate-400 hidden sm:inline">{user.email}</span>
+                  <Link
+                    to="/history"
+                    className="flex items-center justify-center px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                  >
+                    History
+                  </Link>
                   <button
                     onClick={logout}
                     className="flex items-center justify-center px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
@@ -46,7 +47,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 </Link>
               )}
               <Link to="/scan" className="flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-glow">
-                Get Started
+                Scan again
               </Link>
             </div>
           </div>
