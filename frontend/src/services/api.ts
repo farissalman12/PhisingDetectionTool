@@ -64,7 +64,7 @@ let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 // 2. Render Blueprint Fix
 // If Render's 'host' property is injected, it might just be the internal service name (e.g. "phishing-tool-backend")
 // It needs the public suffix to resolve in the user's browser.
-if (baseURL && !baseURL.includes('.') && baseURL !== 'localhost') {
+if (baseURL && !baseURL.includes('.') && !baseURL.includes('localhost')) {
   baseURL = `${baseURL}.onrender.com`;
 }
 
