@@ -28,10 +28,6 @@ export const Layout = ({ children }: LayoutProps) => {
               <Link to="/history" className="text-sm font-medium text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-white transition-colors">
                 History
               </Link>
-              <a href="#" className="text-sm font-medium text-slate-600 hover:text-primary dark:text-slate-300 dark:hover:text-white transition-colors flex items-center gap-1">
-                <span className="material-symbols-outlined text-lg">play_circle</span>
-                Video Demo
-              </a>
             </div>
             <div className="flex items-center gap-3">
               {user ? (

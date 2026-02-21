@@ -29,10 +29,10 @@ export const ScanProgress = () => {
         // 1. Puter AI Call
         let aiScore, aiExplanation;
         try {
-          if (window.puter?.ai?.chat) {
+          if ((window as any).puter?.ai?.chat) {
             setStatus('Initializing OpenAI analysis...');
             const sysPrompt = `Analyze this input for phishing or scams. Reply strictly with JSON ONLY: {"score": <0-100 risk score>, "explanation": "<concise 1-sentence reason>"}\n\nURL: ${url}\nContent: ${content || 'None'}`;
-            const aiResponse: any = await window.puter.ai.chat(sysPrompt);
+            const aiResponse: any = await (window as any).puter.ai.chat(sysPrompt);
             const text = typeof aiResponse === 'string' ? aiResponse : (aiResponse?.message || aiResponse?.text || '');
             const match = text.match(/\{[\s\S]*\}/);
             if (match) {
